@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from datetime import datetime
-from core.database import Base
+from attendance.models.base import Base
 
 class AuthUser(Base):
     __tablename__ = "auth_user"

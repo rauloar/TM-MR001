@@ -2,7 +2,7 @@ import getpass
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from core.security import hash_password
-from models.user import AuthUser
+from attendance.models import AuthUser
 
 print("=== Herramienta de cambio de usuario y contraseña para SRTime ===")
 print("Esta herramienta permite crear o actualizar un usuario en la base de datos.")

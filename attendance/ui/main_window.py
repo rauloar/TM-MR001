@@ -38,7 +38,7 @@ AAABAAEAICAAAAAAIADaCQAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAgAAAAIAgGAAAAc3p69AAACaFJ
         tabs.addTab(import_tab, "Importar")
         tabs.addTab(users_tab, "Usuarios")
         tabs.addTab(movements_tab, "Movimientos")
-        tabs.addTab(ProcesoTab(), "Proceso")
+        tabs.addTab(ProcesoTab(self.session), "Proceso")
         self.setCentralWidget(tabs)
 
         # Menú para cambiar tema (QSS manual)

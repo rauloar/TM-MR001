@@ -1,7 +1,6 @@
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
-from models.employee import User
-from models.attendance import AttendanceLog
+from attendance.models import User, AttendanceLog
 
 def parse_line(line: str):
     identifier = line[0:15]
@@ -45,7 +44,12 @@ def import_att_logs(path, session, progress_signal=None):
             identifier, date, time, mark_type, flags = parse_line(line)
             user = session.query(User).filter_by(identifier=identifier).first()
             if not user:
-                user = User(identifier=identifier)
+                user = User(
+                    identifier=identifier,
+                    first_name="",
+                    last_name="",
+                    is_active=True
+                )
                 session.add(user)
                 session.commit()
             # Solo guardar si es nuevo

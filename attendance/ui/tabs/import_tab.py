@@ -25,7 +25,7 @@ class ImportTab(QWidget):
             self.path_label.setText(f"Archivo: {path}")
             self.btn_select.setEnabled(False)
             # Guardar path en la BD
-            from models.attendance import AttendanceLog
+            from attendance.models import AttendanceLog
             from sqlalchemy import desc
             log_reciente = self.session.query(AttendanceLog).order_by(desc(AttendanceLog.created_at)).first()
             if log_reciente:

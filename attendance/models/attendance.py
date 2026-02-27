@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Date, Time, DateTime, ForeignKey, UniqueConstraint
 from datetime import datetime
-from core.database import Base
+from attendance.models.base import Base
 
 class AttendanceLog(Base):
     __tablename__ = "attendance_log"

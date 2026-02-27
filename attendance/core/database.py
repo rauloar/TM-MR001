@@ -1,7 +1,13 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import sessionmaker
+import os
 
-DATABASE_URL = "sqlite:///attendance.db"
+# Ruta absoluta y creación segura del directorio attendance/
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_DIR = os.path.abspath(os.path.join(BASE_DIR, '../attendance'))
+os.makedirs(DB_DIR, exist_ok=True)
+DB_PATH = os.path.join(DB_DIR, 'attendance.db')
+DATABASE_URL = f"sqlite:///{DB_PATH}"
 
 engine = create_engine(
     DATABASE_URL,
@@ -10,4 +16,6 @@ engine = create_engine(
 )
 
 SessionLocal = sessionmaker(bind=engine)
-Base = declarative_base()
+
+# Importar Base unificada
+from attendance.models.base import Base

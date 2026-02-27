@@ -1,5 +1,7 @@
 import sys
+import os
 import platform
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from PySide6.QtWidgets import QApplication
 
 app = QApplication(sys.argv)
@@ -61,7 +63,7 @@ if __name__ == "__main__":
     from PySide6.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox
     from sqlalchemy.orm import Session
     from core.security import verify_password
-    from models.user import AuthUser
+    from attendance.models import AuthUser
     from PySide6.QtGui import QIcon, QPixmap
     import base64
     ICON_PNG_BASE64 = """
@@ -98,7 +100,7 @@ AAABAAEAICAAAAAAIADaCQAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAgAAAAIAgGAAAAc3p69AAACaFJ
         def try_login(self):
             from core.database import SessionLocal
             session = SessionLocal()
-            from models.user import AuthUser
+            from attendance.models import AuthUser
             from core.security import verify_password
             user = session.query(AuthUser).filter_by(username=self.user_input.text()).first()
             # Si user es None, no hay usuario

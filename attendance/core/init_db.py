@@ -1,17 +1,15 @@
 from core.database import engine, Base
-from models import user, attendance
-from models.employee import User
+from attendance import models  # Importa todos los modelos y los registra una sola vez
 from sqlalchemy.orm import Session
 from core.security import hash_password
-from models.user import AuthUser
 
 def init_database():
     Base.metadata.create_all(bind=engine)
     session = Session(bind=engine)
 
-    admin = session.query(AuthUser).filter_by(username="admin").first()
+    admin = session.query(models.AuthUser).filter_by(username="admin").first()
     if not admin:
-        admin = AuthUser(
+        admin = models.AuthUser(
             username="admin",
             password_hash=hash_password("admin")
         )

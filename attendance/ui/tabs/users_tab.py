@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableWidget, QTableWidgetItem, QMessageBox, QHBoxLayout, QPushButton, QInputDialog, QStyle
-from models.employee import User
-from models.user import AuthUser
+from attendance.models import User
+from attendance.models import AuthUser
 from PySide6.QtWidgets import QSizePolicy
 
 class UsersTab(QWidget):

@@ -1,6 +1,5 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QTableWidget, QTableWidgetItem, QFileDialog, QPushButton
-from models.attendance import AttendanceLog
-from models.employee import User
+from attendance.models import AttendanceLog, User
 import pandas as pd
 
 class MovementsTab(QWidget):
