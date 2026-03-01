@@ -167,4 +167,5 @@ class FeatureEngine:
         else:
             core["sudden_drop_flag"] = 0
 
-        return core
+            core["daily_minutes_map"] = daily_minutes
+            return core

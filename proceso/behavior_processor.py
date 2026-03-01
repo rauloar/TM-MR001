@@ -19,8 +19,10 @@ class BehaviorProcessor:
         # -------------------------------------------------
         # 1️⃣ Obtener logs del usuario
         # -------------------------------------------------
-        query = self.session.query(AttendanceLog) \
+        query = (
+            self.session.query(AttendanceLog)
             .filter(AttendanceLog.raw_identifier == user_identifier)
+        )
 
         logs = query.all()
 
@@ -36,7 +38,7 @@ class BehaviorProcessor:
             return None
 
         # -------------------------------------------------
-        # 3️⃣ Asegurar tipos date correctos
+        # 3️⃣ Normalizar fechas
         # -------------------------------------------------
         if isinstance(fecha_inicio, datetime):
             fecha_inicio = fecha_inicio.date()
@@ -45,8 +47,8 @@ class BehaviorProcessor:
             fecha_fin = fecha_fin.date()
 
         # -------------------------------------------------
-        # 4️⃣ Filtrar sesiones respetando selector
-        #    Política: sesión pertenece al día de ENTRADA
+        # 4️⃣ Filtrar sesiones según selector
+        # Política: la jornada pertenece al día de ENTRADA
         # -------------------------------------------------
         if fecha_inicio and fecha_fin:
             filtered_sessions = [
@@ -96,7 +98,7 @@ class BehaviorProcessor:
             return None
 
         # -------------------------------------------------
-        # 7️⃣ Calcular tendencia
+        # 8️⃣ Calcular tendencia
         # -------------------------------------------------
         trend = self.feature_engine.compute_trend(daily_minutes)
 
@@ -105,17 +107,22 @@ class BehaviorProcessor:
         core["sudden_drop_flag"] = 1 if trend < -30 else 0
 
         # -------------------------------------------------
-        # 8️⃣ Evaluar comportamiento (Rule Engine)
+        # 🔥 AGREGADO PARA PANEL GRÁFICO
+        # -------------------------------------------------
+        core["daily_minutes_map"] = daily_minutes
+
+        # -------------------------------------------------
+        # 9️⃣ Evaluar comportamiento (Rule Engine)
         # -------------------------------------------------
         evaluation = self.behavior_engine.evaluate(
-             user_identifier,
-             core,
-             fecha_inicio,
-             fecha_fin
+            user_identifier,
+            core,
+            fecha_inicio,
+            fecha_fin
         )
 
         # -------------------------------------------------
-        # 9️⃣ Retornar resultado estructurado completo
+        # 🔟 Retornar resultado estructurado completo
         # -------------------------------------------------
         return {
             "user_identifier": user_identifier,
